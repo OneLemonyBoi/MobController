@@ -23,6 +23,7 @@ public class ExampleMod
     private static final Logger LOGGER = LogManager.getLogger();
 
     public ExampleMod() {
+        ModRegistry.register();
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the doClientStuff method for modloading
@@ -30,6 +31,10 @@ public class ExampleMod
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+
+        MinecraftForge.EVENT_BUS.addListener(ClientStuff::onAttack);
+        MinecraftForge.EVENT_BUS.addListener(ClientStuff::onSpawn);
+        MinecraftForge.EVENT_BUS.addListener(ClientStuff::onEgg);
     }
 
     private void setup(final FMLCommonSetupEvent event)
@@ -42,7 +47,6 @@ public class ExampleMod
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
         // do something when the server starts
-        LOGGER.info("HELLO from server starting");
     }
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
