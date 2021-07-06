@@ -35,7 +35,8 @@ minecraft {
     // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
-            property 'mixin.env.disableRefMap', 'true'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             workingDirectory project.file('run')
             arg "-mixin.config="+archivesBaseName+".mixins.json"
 
@@ -51,7 +52,8 @@ minecraft {
         }
 
         server {
-            property 'mixin.env.disableRefMap', 'true'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             workingDirectory project.file('run')
             arg "-mixin.config="+archivesBaseName+".mixins.json"
 
@@ -108,6 +110,18 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}" //21
 
     implementation fg.deobf("curse.maven:calemis-utilities-320196:3206910")
+    implementation fg.deobf("curse.maven:pandoras-creatures-342804:3093477")
+    implementation fg.deobf("curse.maven:mowzies-mobs-250498:3344622")
+
+    implementation fg.deobf("curse.maven:alexs-mobs-426558:3308459")
+    implementation fg.deobf("curse.maven:citadel-331936:3346836")
+    implementation fg.deobf("curse.maven:mrcrayfishs-gun-mod-289479:3224957")
+    implementation fg.deobf("curse.maven:potato-cannon-443469:3338586")
+    implementation fg.deobf("curse.maven:spartan-weaponry-278141:3164046")
+    implementation fg.deobf("curse.maven:obfuscate-289380:3336021")
+    implementation fg.deobf("curse.maven:kubejs-forge-238086:3364266")
+    implementation fg.deobf("curse.maven:architectury-forge-419699:3366160")
+    implementation fg.deobf("curse.maven:rhino-416294:3354603")
 }
 
 sourceSets {

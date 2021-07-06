@@ -20,7 +20,7 @@ public class ExampleMod
 
     public static final String MODID = "examplemod";
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public ExampleMod() {
         ModRegistry.register();
@@ -32,9 +32,11 @@ public class ExampleMod
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
+        MinecraftForge.EVENT_BUS.addListener(ClientStuff::onGlowingDamage);
         MinecraftForge.EVENT_BUS.addListener(ClientStuff::onAttack);
+        MinecraftForge.EVENT_BUS.addListener(ClientStuff::onThrow);
         MinecraftForge.EVENT_BUS.addListener(ClientStuff::onSpawn);
-        MinecraftForge.EVENT_BUS.addListener(ClientStuff::onEgg);
+        MinecraftForge.EVENT_BUS.addListener(ClientStuff::onKill);
     }
 
     private void setup(final FMLCommonSetupEvent event)
@@ -42,6 +44,7 @@ public class ExampleMod
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
+        ActualClient.client();
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

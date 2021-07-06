@@ -4,10 +4,14 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "examplemod.refmap.json",
   "mixins": [
-    "Mixins$Mixin1"
+    "Mixins$Mixin1",
+    "Mixins$Mixin2",
+    "Mixins$Mixin3",
+    "Mixins$Mixin4"
   ],
   "client": [
-    "Mixins$Mixin1"
+    "Mixins$Mixin1",
+    "Mixins$Mixin4"
   ],
   "injectors": {
     "defaultRequire": 1

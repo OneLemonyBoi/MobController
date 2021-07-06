@@ -13,7 +13,7 @@ import net.minecraft.potion.Effects;
 import java.util.EnumSet;
 
 public class GlowingTemptGoal extends Goal {
-   private static final EntityPredicate ENTITY_PREDICATE = (new EntityPredicate()).setDistance(10.0D).allowInvulnerable().allowFriendlyFire().setSkipAttackChecks().setIgnoresLineOfSight();
+   private static final EntityPredicate ENTITY_PREDICATE = (new EntityPredicate()).setDistance(64.0D).allowInvulnerable().allowFriendlyFire().setSkipAttackChecks().setIgnoresLineOfSight();
    protected final CreatureEntity creature;
    private final double speed;
    private double targetX;
@@ -37,9 +37,6 @@ public class GlowingTemptGoal extends Goal {
       this.temptItem = temptItemsIn;
       this.scaredByPlayerMovement = scaredByPlayerMovementIn;
       this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-      if (!(creatureIn.getNavigator() instanceof GroundPathNavigator) && !(creatureIn.getNavigator() instanceof FlyingPathNavigator)) {
-         throw new IllegalArgumentException("Unsupported mob type for TemptGoal");
-      }
    }
 
    /**

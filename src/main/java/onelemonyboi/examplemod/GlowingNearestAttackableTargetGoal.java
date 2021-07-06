@@ -1,14 +1,11 @@
 package onelemonyboi.examplemod;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.Effect;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.AxisAlignedBB;
 
@@ -61,14 +58,15 @@ public class GlowingNearestAttackableTargetGoal<T extends LivingEntity> extends 
    protected void findNearestTarget() {
       List<UUID> claimedPlayers = this.goalOwner.getTags().stream().filter(GlowingNearestAttackableTargetGoal::UUIDCalc).map(UUID::fromString).collect(Collectors.toList());
       if (claimedPlayers.size() > 0 && this.goalOwner.world.getPlayerByUuid(claimedPlayers.get(0)) != null) {
-         LivingEntity attacking = this.goalOwner.world.getPlayerByUuid(claimedPlayers.get(0)).getAttackingEntity();
-         LivingEntity attacked = this.goalOwner.world.getPlayerByUuid(claimedPlayers.get(0)).getLastAttackedEntity();
-         LivingEntity closestEntity = getClosestEntity(this.targetClass, this.targetEntitySelector, this.goalOwner, this.goalOwner.getPosX(), this.goalOwner.getPosYEye(), this.goalOwner.getPosZ(), this.getTargetableArea(this.getTargetDistance()));
+         PlayerEntity playerEntity = this.goalOwner.world.getPlayerByUuid(claimedPlayers.get(0));
+         LivingEntity attacking = playerEntity.getAttackingEntity();
+         LivingEntity attacked = playerEntity.getLastAttackedEntity();
+         LivingEntity closestEntity = getClosestEntity(MobEntity.class, this.targetEntitySelector, this.goalOwner, this.goalOwner.getPosX(), this.goalOwner.getPosYEye(), this.goalOwner.getPosZ(), this.getTargetableArea(this.getTargetDistance()));
 
-         if (attacking != null && attacking.getActivePotionEffect(Effects.GLOWING) == null) {
+         if (attacking != null && attacking.getActivePotionEffect(Effects.GLOWING) == null && !attacking.removed) {
             this.nearestTarget = attacking;
          }
-         else if (attacked != null && attacked.getActivePotionEffect(Effects.GLOWING) == null) {
+         else if (attacked != null && attacked.getActivePotionEffect(Effects.GLOWING) == null && !attacked.removed) {
             this.nearestTarget = attacked;
          }
          else {
